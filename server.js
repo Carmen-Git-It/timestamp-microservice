@@ -10,10 +10,6 @@ var app = express();
 var cors = require('cors');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
-var bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({extended: false}));
-
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
@@ -23,11 +19,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/:date", (req, res) => {
-  let date = new Date(req.params.date);
+  let date = Date.parse(req.params.date);
   if (isNaN(date)) {
     // Date is invalid
   } else {
-    res.send({"unix": date.getTime().toString()});
+    res.send({"unix": date});
   }
 });
 
