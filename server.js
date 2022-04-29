@@ -19,11 +19,17 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/:date", (req, res) => {
-  let date = Date.parse(req.params.date);
-  if (isNaN(date)) {
-    // Date is invalid
+  let date;
+  if (req.params.date.includes("-")) {
+    date = new Date(req.params.date);
   } else {
-    res.send({"unix": date});
+    date = new Date(parseInt(req.params.date));
+  }
+  if (isNaN(date)) {
+    res.send({"error": "Invalid date"});
+  } else {
+    res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+    res.send();
   }
 });
 
