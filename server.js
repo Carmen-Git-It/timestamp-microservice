@@ -22,20 +22,14 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/:d/api", (res, req) => {
-  res.send({"d": req.params.d});
-});
-/*
-app.get("/api/:date", (res, req) => {
-  console.log(req.params);
-  res.send({"Date": req.params.date});
-  /*let date = new Date(req.params.date);
+app.get("/api/:date", (req, res) => {
+  let date = new Date(req.params.date);
   if (isNaN(date)) {
     // Date is invalid
   } else {
     res.send({"unix": date.getTime().toString()});
   }
-});*/
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
