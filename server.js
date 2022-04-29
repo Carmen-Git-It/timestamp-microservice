@@ -10,6 +10,10 @@ var app = express();
 var cors = require('cors');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: false}));
+
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
@@ -18,20 +22,20 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+app.get("/:d/api", (res, req) => {
+  res.send({"d": req.params.d});
 });
-
+/*
 app.get("/api/:date", (res, req) => {
-  let date = new Date(req.params.date);
+  console.log(req.params);
+  res.send({"Date": req.params.date});
+  /*let date = new Date(req.params.date);
   if (isNaN(date)) {
     // Date is invalid
   } else {
     res.send({"unix": date.getTime().toString()});
   }
-});
+});*/
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
