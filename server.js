@@ -18,15 +18,22 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api", (req, res) => {
+  let date = new Date();
+  res.json({"unix": date.getTime(), "utc": date.toUTCString()});
+  res.send();
+});
+
 app.get("/api/:date", (req, res) => {
   let date;
   if (req.params.date.includes("-")) {
     date = new Date(req.params.date);
-  } else {
+  } 
+  else {
     date = new Date(parseInt(req.params.date));
   }
   if (isNaN(date)) {
-    res.send({"error": "Invalid date"});
+    res.send({"error": "Invalid Date"});
   } else {
     res.json({"unix": date.getTime(), "utc": date.toUTCString()});
     res.send();
