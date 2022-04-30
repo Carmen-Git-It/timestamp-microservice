@@ -26,7 +26,7 @@ app.get("/api", (req, res) => {
 
 app.get("/api/:date", (req, res) => {
   let date;
-  if (req.params.date.includes("-")) {
+  if (req.params.date.includes("-") || isNaN(req.params.date)) {
     date = new Date(req.params.date);
   } 
   else {
